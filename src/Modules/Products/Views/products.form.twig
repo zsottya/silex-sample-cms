@@ -1,0 +1,111 @@
+{% extends theme ~ "/layout.twig" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <h2>Termék {% if edit_mode %} szerkesztése {% else %} felvétele {% endif %}</h2>
+        </div>
+    </div>
+
+    {% if categories is empty %}    
+    <div class="container">
+        <div class="row">
+            <div class="alert alert-warning">
+                <strong>Figyelem!</strong> Jelenleg egy kategória sincs rögzítve a rendszerben, kérem először rögzítsen kategóriákat!
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <form method="post" action="/admin/products/save/{{ id }}" class="form-horizontal" enctype="multipart/form-data">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="control-label" for="title">Cím: *</label>
+                <input type="text" class="form-control" id="title" name="title" value="{{ product.title }}" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="control-label" for="console">Konzol típusa: *</label>
+                <select name="console" id="console" class="form-control" required>
+                {% for identifier,consoletext in consoletypes %}
+                    <option value="{{ identifier }}"{% if identifier == product.console %} selected{% endif %}>{{ consoletext }}</option>
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="control-label" for="category">Kategória: *</label>
+                <select name="category" id="category" class="form-control" required>
+                {% for identifier,categorytext in categories %}
+                    <option value="{{ identifier }}"{% if identifier == product.category %} selected{% endif %}>{{ categorytext }}</option>
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="control-label" for="release_date">Kiadás éve:</label>
+                <input type="text" class="form-control" id="release_date" name="release_date" value="{{ product.release_date }}">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="control-label" for="publisher">Kiadó:</label>
+                <input type="text" class="form-control" id="publisher" name="publisher" value="{{ product.publisher }}">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="control-label" for="url">URL:</label>
+                <input type="text" class="form-control" id="url" name="url" value="{{ product.url }}">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="control-label" for="tags">Tag-ek:</label>
+                <input type="text" class="form-control" id="tags" name="tags" value="{{ product.tags }}">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="control-label" for="metascore">Metascore:</label>
+                <input type="text" class="form-control" id="metascore" name="metascore" value="{{ product.metascore }}">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="control-label" for="image">Borító:</label>
+                <div>
+                    {% if product.image != '' %}
+                    <img src="/uploads/{{ product.image }}" style="max-height: 128px">
+                    {% endif %}
+                    <input type="file" id="image" name="image">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <input type="submit" class="btn btn-success" name="save" value="Mentés">
+            </div>
+        </div>
+
+    </div>
+
+    </form>
+    
+{% endblock %}

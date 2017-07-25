@@ -1,0 +1,32 @@
+{% extends theme ~ "/layout.twig" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <h2>Kategória {% if edit_mode %} szerkesztése {% else %} felvétele {% endif %}</h2>
+        </div>
+    </div>
+
+    <form method="post" action="/admin/categories/save/{{ id }}" class="form-horizontal">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="control-label" for="title">Cím: *</label>
+                <input type="text" class="form-control" id="title" name="title" value="{{ category.title }}" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <input type="submit" class="btn btn-success" name="save" value="Mentés">
+            </div>
+        </div>
+
+    </div>
+
+    </form>
+    
+{% endblock %}

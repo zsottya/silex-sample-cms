@@ -1,0 +1,45 @@
+{% extends theme ~ "/layout.twig" %}
+
+{% block content %}
+
+    <div class="container">
+        <a href="/admin/products/add" class="pull-right btn btn-info">Létrehozás</a>
+        <h2>Termékek</h2>
+        {% if products|length > 0 %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Borító</th>
+                    <th>Cím</th>
+                    <th>Játék kategória</th>
+                    <th>Konzol típusa</th>
+                    <th>Meta game score</th>
+                    <th>Műveletek</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>
+                    {% if product.image is not empty %}
+                    <img src="/uploads/{{ product.image }}" class="game-cover">
+                    {% endif %}
+                    </td>
+                    <td>{{ product.title }}</td>
+                    <td>{{ product.category }}</td>
+                    <td>{{ product.console }}</td>
+                    <td>{{ product.metascore }}</td>
+                    <td>
+                        <a href="/admin/products/edit/{{ product.id }}">Szerkesztés</a> | 
+                        <a href="/admin/products/delete/{{ product.id }}">Törlés</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>Jelenleg egy termék sincs az adatbázisban.</p>
+        {% endif %}
+    </div>
+    
+{% endblock %}

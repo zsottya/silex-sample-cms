@@ -1,0 +1,33 @@
+{% extends theme ~ "/layout.twig" %}
+
+{% block content %}
+
+    <div class="container">
+        <a href="/admin/categories/add" class="pull-right btn btn-info">Létrehozás</a>
+        <h2>Kategóriák</h2>
+        {% if categories|length > 0 %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Cím</th>
+                    <th width="30%">Műveletek</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for category in categories %}
+                <tr>
+                    <td>{{ category.title }}</td>
+                    <td>
+                        <a href="/admin/categories/edit/{{ category.id }}">Szerkesztés</a> | 
+                        <a href="/admin/categories/delete/{{ category.id }}">Törlés</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>Jelenleg egy kategória sincs az adatbázisban.</p>
+        {% endif %}
+    </div>
+    
+{% endblock %}
